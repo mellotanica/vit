@@ -1,0 +1,5 @@
+vit (1.1-1) unstable; urgency=low
+
+  * Initial release (Closes: #717271).
+
+ -- Alejandro Garrido Mota <alejandro@debian.org>  Thu, 18 Jul 2013 10:38:27 -0430
