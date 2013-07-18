@@ -1,0 +1,51 @@
+.\" (C) Copyright 2013 Alejandro Garrido Mota <alejandro@debian.org>,
+.\"
+.\" First parameter, NAME, should be all caps
+.\" Second parameter, SECTION, should be 1-8, maybe w/ subsection
+.\" other parameters are allowed: see man(7), man(1)
+.TH VIT 1 "July 18, 2013"
+.\" Please adjust this date whenever revising the manpage.
+.\"
+.\" Some roff macros, for reference:
+.\" .nh        disable hyphenation
+.\" .hy        enable hyphenation
+.\" .ad l      left justify
+.\" .ad b      justify to both left and right margins
+.\" .nf        disable filling
+.\" .fi        enable filling
+.\" .br        insert line break
+.\" .sp <n>    insert n+1 empty lines
+.\" for manpage-specific macros, see man(7)
+.SH NAME
+vit \- full-screen terminal interface for Taskwarrior
+.SH SYNOPSIS
+.B vit
+.RI [switches] \  [task_args]
+.br
+.SH DESCRIPTION
+\fBvit\fP is a minimalistic Taskwarrior full-screen terminal interface with Vim key bindings. Vit display all reports and all of the basic Taskwarrior functionality. It support almost all commands, and thus serves as a fully functional replacement for VITtk.
+.PP
+.SH OPTIONS
+This program follow the usual GNU command line syntax, with long
+options starting with two dashes (`-').
+A summary of options is included below.
+.TP
+.B \-help
+show summary of options.
+.TP
+.B \-audit
+print task commands to stderr.
+.TP
+.B \-titlebar
+sets the xterm titlebar 
+.TP
+.B [task_args]
+any set of task commandline args that print an "ID" column
+.SH SEE ALSO
+.BR task (1),
+.br
+.SH AUTHOR
+\fBvit\fP was written by Steve Rader <rader@hep.wisc.edu>.
+.PP
+This manual page was written by Alejandro Garrido Mota <alejandro@debian.org>,
+for the Debian project (and may be used by others)

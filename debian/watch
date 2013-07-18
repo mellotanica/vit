@@ -1,0 +1,2 @@
+version=3
+http://taskwarrior.org/projects/taskwarrior/wiki/Vit .+/vit-([\d.-]+)\.tar.gz$
