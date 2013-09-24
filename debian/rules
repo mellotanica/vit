@@ -1,5 +1,4 @@
 #!/usr/bin/make -f
-export DH_VERBOSE=1
 PACKAGE = $(shell dh_listpackages)
 TMP     = $(CURDIR)/debian/$(PACKAGE)
 
@@ -9,7 +8,5 @@ TMP     = $(CURDIR)/debian/$(PACKAGE)
 override_dh_auto_install:
 	mkdir -p $(TMP)/usr/bin
 	cp vit $(TMP)/usr/bin/vit
-	mkdir -p $(TMP)/etc
-	cp commands $(TMP)/etc/vit-commands
 
 override_dh_auto_test:

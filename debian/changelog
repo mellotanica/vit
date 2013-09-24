@@ -1,3 +1,12 @@
+vit (1.1-2) unstable; urgency=low
+
+  * d/rules:
+    - Remove DH_VERBOSE.
+    - Remove /etc copy of vit-commands file (Closes: 724490). 
+  * Add patch to fix the path of vit commands file.
+
+ -- Alejandro Garrido Mota <alejandro@debian.org>  Tue, 24 Sep 2013 09:17:33 -0430
+
 vit (1.1-1) unstable; urgency=low
 
   * Initial release (Closes: #717271).

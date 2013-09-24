@@ -1,0 +1,14 @@
+Description: Change path of commands_file to /usr/share/doc/vit/vit-commands
+Author: Alejandro Garrido Mota <alejandro@debian.org>
+
+--- a/vit.pl
++++ b/vit.pl
+@@ -9,7 +9,7 @@
+ use Curses;
+ use Time::HiRes qw(usleep);
+ 
+-our $commands_file = '%prefix%/etc/vit-commands';
++our $commands_file = '/usr/share/doc/vit/commands';
+ our $task = '%TASK%';
+ our $clear = '%CLEAR%';
+ if ( $commands_file =~ /^%/ ) { $commands_file = "./commands"; }
