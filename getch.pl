@@ -1,15 +1,25 @@
+# Copyright 2012 - 2013, Steve Rader
+# Copyright 2013 - 2014, Scott Kostyshak
 
 sub getch_loop {
   while (1) {
     my $ch = $report_win->getch();
-    $refresh_needed = 0; 
-    $reread_needed = 0; 
+    &audit("Received key: $ch");
+    $refresh_needed = 0;
+    $reread_needed = 0;
     $error_msg = '';
     $feedback_msg = '';
 
     CASE: {
 
-      if ( $ch eq '0' ) {
+      if (exists $shortcuts{$ch}) {
+        my $action = $shortcuts{$ch};
+        &audit("Processing the following shortcut: $action");
+        &ungetstr($action);
+        last CASE;
+      }
+
+      if ( $ch eq '0' || ( $ch eq 'g' && $prev_ch eq 'g' ) ) {
         $task_selected_idx = 0;
         $display_start_idx = 0;
         $refresh_needed = 1;
@@ -31,13 +41,8 @@ sub getch_loop {
         last CASE;
       }
 
-      if ( $ch eq 'c' ) {
-        &task_change();
-        last CASE;
-      }
-
       if ( $ch eq 'D' ) {
-        &task_denotate();
+        &task_den_or_del();
         last CASE;
       }
 
@@ -64,15 +69,10 @@ sub getch_loop {
 
       if ( $ch eq 'G' ) {
         $task_selected_idx = $#report_tokens;
-        if ( $display_start_idx + $REPORT_LINES <= $#report_tokens ) { 
+        if ( $display_start_idx + $REPORT_LINES <= $#report_tokens ) {
           $display_start_idx = $task_selected_idx - $REPORT_LINES + 1;
         }
         $refresh_needed = 1;
-        last CASE;
-      }
-
-      if ( $ch eq 'h' ) {
-        &task_set_prio('H');
         last CASE;
       }
 
@@ -82,9 +82,8 @@ sub getch_loop {
         last CASE;
       }
 
-
       if ( $ch eq 'j' || $ch eq KEY_DOWN || $ch eq ' ' ) {
-        if ( $task_selected_idx >= $#report_tokens ) { 
+        if ( $task_selected_idx >= $#report_tokens ) {
           beep;
           last CASE;
         }
@@ -94,7 +93,7 @@ sub getch_loop {
         }
         $refresh_needed = 1;
         last CASE;
-      }  
+      }
 
       if ( $ch eq 'k' || $ch eq KEY_UP ) {
         if ( $task_selected_idx == 0 ) {
@@ -107,7 +106,7 @@ sub getch_loop {
         }
         $refresh_needed = 1;
         last CASE;
-      }  
+      }
 
       if ( $ch eq 'L' ) {
         $task_selected_idx = $display_start_idx + $REPORT_LINES - 1;
@@ -116,14 +115,9 @@ sub getch_loop {
         last CASE;
       }
 
-      if ( $ch eq 'l' ) {
-        &task_set_prio('L');
-        last CASE;
-      }
-
       if ( $ch eq 'M' ) {
         $task_selected_idx = $display_start_idx + int($REPORT_LINES / 2);
-        if ( $display_start_idx + $REPORT_LINES > $#report_tokens ) { 
+        if ( $display_start_idx + $REPORT_LINES > $#report_tokens ) {
           $task_selected_idx = $display_start_idx + int(($#report_tokens - $display_start_idx) / 2);
         }
         $refresh_needed = 1;
@@ -131,7 +125,7 @@ sub getch_loop {
       }
 
       if ( $ch eq 'm' ) {
-        &task_set_prio('M');
+        &task_modify_prompt();
         last CASE;
       }
 
@@ -141,14 +135,14 @@ sub getch_loop {
         last CASE;
       }
 
-      if ( $ch eq 'n' && $input_mode eq 'cmd' ) {
-        &task_set_prio('');
-        last CASE;
-      }
-
       if ( $ch eq 'n' && $input_mode eq 'search' ) {
         &do_search('n');
         $refresh_needed = 1;
+        last CASE;
+      }
+
+      if ( $ch eq 'P' ) {
+        &task_set_priority();
         last CASE;
       }
 
@@ -157,15 +151,36 @@ sub getch_loop {
         last CASE;
       }
 
+      if ( $ch eq 'q' ) {
+        &prompt_quit();
+        last CASE;
+      }
+
+      if ( $ch eq 'Q' || ($ch eq 'Z' && $prev_ch eq 'Z') ) {
+        return;
+      }
+
+      if ( $ch eq 's' ) {
+        my $majmin = &task_version('major.minor');
+        if ( $majmin >= 2.3 ) {
+          &shell_exec("task sync",'wait');
+        }
+        else {
+          $error_msg = "'sync' was introduced in Taskwarrior 2.3.0";
+          $refresh_needed = 1;
+        }
+        last CASE;
+      }
+
+      if ( $ch eq 't' ) {
+        &ungetstr(':!rw task ')
+      }
+
       if ( $ch eq 'u' ) {
         &shell_exec('task undo','wait');
         $reread_needed = 1;
         last CASE;
       }
-
-      if ( $ch eq 'Z' && $prev_ch eq 'Z' ) {
-        return;
-      } 
 
       if ( $ch eq '/' ) {
         $search_direction = 1;
@@ -191,7 +206,7 @@ sub getch_loop {
           $p =~ s/\(none\)//;
           $current_command = "ls proj:$p";
           $reread_needed = 1;
-        } else { 
+        } else {
           &shell_exec("task $report2taskid[$task_selected_idx] info",'wait');
         }
         last CASE;
@@ -209,9 +224,9 @@ sub getch_loop {
       if ( $ch eq "\cf" || $ch eq KEY_NPAGE ) {
         $display_start_idx += $REPORT_LINES;
         $task_selected_idx += $REPORT_LINES;
-        if ( $task_selected_idx > $#report_tokens ) { 
-          $display_start_idx = $#report_tokens; 
-          $task_selected_idx = $#report_tokens; 
+        if ( $task_selected_idx > $#report_tokens ) {
+          $display_start_idx = $#report_tokens;
+          $task_selected_idx = $#report_tokens;
         }
         $refresh_needed = 1;
         last CASE;
@@ -221,7 +236,7 @@ sub getch_loop {
         endwin();
         &init_curses('refresh');
         &read_report('refresh');
-        if ( $task_selected_idx > $display_start_idx + $REPORT_LINES - 1 ) { 
+        if ( $task_selected_idx > $display_start_idx + $REPORT_LINES - 1 ) {
           $display_start_idx = $task_selected_idx - $REPORT_LINES + 1;
         }
         &draw_screen();
@@ -236,7 +251,12 @@ sub getch_loop {
         last CASE;
       }
       if ( $ch eq 'Z' ) { last CASE; }
-      if ( $ch eq "410" ) { last CASE; } # FIXME resize
+      if ( $ch eq "410" ) {
+        # FIXME resize
+        &init_curses('refresh');
+        &draw_screen();
+        last CASE;
+      }
       if ( $ch eq '-1' ) { last CASE; }
       beep();
     }

@@ -1,3 +1,5 @@
+# Copyright 2012 - 2013, Steve Rader
+# Copyright 2013 - 2014, Scott Kostyshak
 
 sub draw_screen {
   my ($x,$t,$fg,$bg,$cp,$str);
@@ -14,7 +16,7 @@ sub draw_screen {
       $str = "$num_projects projects";
       last CASE;
     }
-    if ( $num_tasks == 1 ) { 
+    if ( $num_tasks == 1 ) {
       $str = '1 task shown';
       last CASE;
     }
@@ -26,7 +28,7 @@ sub draw_screen {
       $str = '1 task';
       last CASE;
     }
-    if ( $current_command eq 'summary' ) { 
+    if ( $current_command eq 'summary' ) {
       $str = "$num_tasks tasks";
       last CASE;
     }
@@ -72,15 +74,15 @@ sub draw_screen {
     $line++;
   }
   $report_win->refresh();
-  if ( $display_start_idx == 0 ) { 
+  if ( $display_start_idx == 0 ) {
     $cursor_position = 'Top';
-  } elsif ( $display_start_idx + $REPORT_LINES >= $#report_tokens + 1 ) { 
+  } elsif ( $display_start_idx + $REPORT_LINES >= $#report_tokens + 1 ) {
     $cursor_position = 'Bot';
   } else {
     $cursor_position = int($task_selected_idx/$#report_tokens*100) . '%';
   }
-  CASE: { 
-    if ( $error_msg ne '' ) { 
+  CASE: {
+    if ( $error_msg ne '' ) {
       &draw_error_msg();
       last CASE;
     }
@@ -88,18 +90,18 @@ sub draw_screen {
       &draw_feedback_msg();
       last CASE;
     }
-    if ( $input_mode eq 'search' && $search_direction == 1 ) { 
+    if ( $input_mode eq 'search' && $search_direction == 1 ) {
       &draw_prompt_line("/$search_pat");
       last CASE;
     }
-    if ( $input_mode eq 'search' && $search_direction == 0 ) { 
+    if ( $input_mode eq 'search' && $search_direction == 0 ) {
       &draw_prompt_line("?$search_pat");
       last CASE;
     }
     &draw_prompt_line('');
   }
-  if ( $flash_convergence ) { 
-    &flash_convergence(); 
+  if ( $flash_convergence ) {
+    &flash_convergence();
     $flash_convergence = 0;
     $prev_convergence = $convergence;
   }

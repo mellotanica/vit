@@ -1,10 +1,12 @@
+# Copyright 2012 - 2013, Steve Rader
+# Copyright 2013 - 2014, Scott Kostyshak
 
 sub task_exec {
   my ($cmd) = @_;
   my $es = 0;
   my $result = '';
-  &audit("EXEC $task $cmd 2>&1");
-  open(IN,"$task $cmd 2>&1 |");
+  &audit("TASK EXEC $task $cmd 2>&1");
+  open(IN,"echo -e \"yes\\n\" | $task $cmd 2>&1 |");
   while(<IN>) {
     chop;
     $_ =~ s/\x1b.*?m//g; # decolorize
@@ -12,7 +14,7 @@ sub task_exec {
     $result .= "$_ ";
   }
   close(IN);
-  if ( $! ) { 
+  if ( $! ) {
     $es = 1;
     &audit("FAILED \"$task $cmd\" error closing short pipe");
   }
@@ -29,15 +31,17 @@ sub shell_exec {
   my ($cmd,$mode) = @_;
   endwin();
   if ( $clear ne 'NOT_FOUND' ) { system("$clear"); }
-  print "$_[0]\r\n";
+  if ( $audit ) {
+    print "$_[0]\r\n";
+  }
   if ( ! fork() ) {
     &audit("EXEC $cmd");
     exec($cmd);
     exit();
   }
   wait();
-  if ( $mode eq 'wait' ) { 
-    print "Press return to continue.\r\n"; 
+  if ( $mode eq 'wait' ) {
+    print "Press return to continue.\r\n";
     <STDIN>;
   }
   &init_curses('refresh');

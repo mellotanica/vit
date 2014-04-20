@@ -1,3 +1,34 @@
+ Sun Apr  6 2013 - released v1.2
+ Tue Apr  1 2014 - the <Esc> key can now be used in shortcuts
+ Tue Apr  1 2014 - exit with informative error if shortcut too long (see VT-81)
+ Thu Mar 13 2014 - fix colors for running VIT in tmux
+ Sat Mar  8 2014 - do not print control characters to prompts
+ Thu Mar  6 2014 - fix recognition of backspace in tmux
+ Thu Mar  6 2014 - fix a prompt bug that prevented editing
+ Mon Mar  3 2014 - 'vit -audit' now creates a log with debug info
+
+ Tue Feb  4 2014 - released v1.2.beta1
+ Tue Feb  4 2014 - Add VIT man pages (#1284)
+ Mon Oct 21 2013 - Implement cursor movement in prompts (#1403)
+ Sun Oct  6 2013 - Clear project prompt string if escape (#1232)
+ Sun Oct  6 2013 - Remove confusing behavior from arrow keys in prompts (#1363)
+ Sun Sep 28 2013 - 'P' now sets priority and 'h', 'm', 'l', 'n' are freed (#1238)
+ Sun Sep 27 2013 - 'c' is renamed to 'm' (#1231)
+ Sun Sep 15 2013 - 't' now opens the command prompt with ":!rw task "
+ Sun Sep 15 2013 - shell commands can now pass the arguments VIT is using (#1338, #1237)
+ Sat Sep 14 2013 - custom keybinds can now be specified in ~/.vitrc (#1237, #1302, #1336)
+ Thu Sep 12 2013 - added ':!' to execute arbitrary string in shell
+ Sun Aug 12 2013 - When running an external command, VIT no longer echoes it
+ Sun Aug 11 2013 - VIT now cleans the terminal before exiting
+ Sun Aug 11 2013 - 'q' ('Q') now quits with(out) confirmation (#1266)
+ Thu Aug  9 2013 - fix a bug where prompt text was invisible
+ Mon Aug  5 2013 - 's' now runs 'task sync' if Taskwarrior >= 2.3.0 (#1301)
+ Sun Aug  4 2013 - when in search mode, backspace now removes a character
+ Sat Aug  3 2013 - 'D' now deletes a task when not over an annotation (#1230)
+ Sat Jul  6 2013 - added Copyright 2013, Scott Kostyshak
+ Sat Jul  6 2013 - added an AUTHORS file listing contributors
+ Sat Jul  6 2013 - 'gg' now moves to first line (#1229)
+ Sun Jun 23 2013 - added Copyright 2012 - 2013, Steve Rader
 
  Wed Apr  3 2013 - released v1.1
  Wed Apr  3 2013 - fixes for not having color=on set in ~/.taskrc
