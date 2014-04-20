@@ -1,3 +1,11 @@
+vit (1.2-1) unstable; urgency=medium
+
+  * New upstream release.
+  * d/control:
+     - Push Standards-Version field.
+
+ -- Alejandro Garrido Mota <alejandro@debian.org>  Sun, 20 Apr 2014 13:07:33 -0430
+
 vit (1.1-2) unstable; urgency=low
 
   * d/rules:
