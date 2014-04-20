@@ -4,6 +4,8 @@
 #
 # %BUILD%
 #
+# Copyright 2012 - 2013, Steve Rader
+# Copyright 2013 - 2014, Scott Kostyshak
 
 use strict;
 use Curses;
@@ -29,7 +31,7 @@ our $error_msg = '';
 our $flash_convergence = 0;
 our $flash_delay = 80000;
 our $header_win;
-our $header_attrs; 
+our $header_attrs;
 our $input_mode = 'cmd';
 our $num_projects = 0;
 our $num_tasks = 0;
@@ -79,6 +81,9 @@ our $COLOR_EMPTY_LINE = 4;
 our $COLOR_ERRORS = 5;
 our $next_color_pair = 6;
 
+our %shortcuts;
+our $cur_pos;
+
 require 'args.pl';
 require 'cmdline.pl';
 require 'cmds.pl';
@@ -98,12 +103,12 @@ require 'search.pl';
 ## main...
 
 &parse_args();
+&parse_vitrc();
 &init_shell_env();
 &init_curses('init');
 &init_task_env();
 &read_report('init');
 &draw_screen();
 &getch_loop();
-endwin();
-exit();
+&clean_exit();
 

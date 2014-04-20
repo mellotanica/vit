@@ -1,3 +1,5 @@
+# Copyright 2012 - 2013, Steve Rader
+# Copyright 2013 - 2014, Scott Kostyshak
 
 sub draw_header_line {
   my ($row,$lhs,$rhs) = @_;
@@ -24,6 +26,16 @@ sub draw_prompt {
   my ($lhs) = @_;
   $prompt_win->addstr(0, 0, $lhs);
   $prompt_win->clrtoeol();
+  $prompt_win->refresh();
+}
+
+#------------------------------------------------------------------
+
+sub draw_prompt_cur {
+  my ($lhs) = @_;
+  $prompt_win->addstr(0, 0, $lhs);
+  $prompt_win->clrtoeol();
+  $prompt_win->move(0, $cur_pos);
   $prompt_win->refresh();
 }
 
@@ -92,7 +104,7 @@ sub draw_report_line {
   if ( $mode eq 'with-selection' && $i == $task_selected_idx ) {
     $report_win->attroff(COLOR_PAIR($COLOR_SELECTION));
     &set_attroff($report_win,$selection_attrs);
-  } else { 
+  } else {
     $report_win->attroff(COLOR_PAIR($cp));
   }
 }

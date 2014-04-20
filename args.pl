@@ -1,10 +1,12 @@
+# Copyright 2012 - 2013, Steve Rader
+# Copyright 2013 - 2014, Scott Kostyshak
 
 sub parse_args {
   while ( @ARGV ) {
-    if ( $ARGV[0] eq '-help' ) { 
+    if ( $ARGV[0] eq '-help' ) {
       &usage();
     }
-    if ( $ARGV[0] eq '-audit' || $ARGV[0] eq '-a' ) { 
+    if ( $ARGV[0] eq '-audit' || $ARGV[0] eq '-a' ) {
       $audit = 1;
       shift @ARGV;
       next;
@@ -19,7 +21,15 @@ sub parse_args {
     next;
   }
   if ( $audit ) {
-    print STDERR "$$ INIT $0 " . join(' ',@ARGV), "\r\n";
+    open(AUDIT, ">", "vit_audit.log") or die "$!";
+    open STDERR, '>&AUDIT';
+
+    # flush AUDIT after printing to it
+    my $ofh = select AUDIT;
+    $| = 1;
+    select $ofh;
+
+    print AUDIT "$$ INIT $0 " . join(' ',@ARGV), "\r\n";
   }
 }
 
@@ -27,7 +37,7 @@ sub parse_args {
 
 sub usage {
   print "usage: vit [switches] [task_args]\n";
-  print "  -audit     print task commands to stderr\n";
+  print "  -audit     print task commands to vit_audit.log\n";
   print "  -titlebar  sets the xterm titlebar to \"$version\"\n";
   print "  task_args  any set of task commandline args that print an \"ID\" column\n";
   exit 1;

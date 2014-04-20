@@ -1,3 +1,30 @@
+.TH vit 1 "" "" "User Manuals"
+
+.SH NAME
+VIT \- Visual Interactive Taskwarrior
+
+.SH SYNOPSIS
+.B vit [-audit] <filter>
+
+.SH DESCRIPTION
+VIT (Visual Interactive Taskwarrior) is a lightweight, curses-based front end
+for Taskwarrior that provides a convenient way to quickly navigate and process
+tasks. VIT allows you to interact with tasks in a Vi-intuitive way.
+
+A goal of VIT is to allow you to customize the way in which you use
+Taskwarrior's core commands as well as to provide a framework for easily
+dispatching external commands (both user scripts and Taskwarrior's many
+external scripts). For more information on this, see vitrc(5).
+
+.SH FILTER
+The <filter> consists of zero or more search criteria that select tasks.  For
+more information on this, see task(1).
+
+.SH AUDIT
+Using the -audit option is for debugging purposes and gives more information
+on what's going on behind the scenes.
+
+.SH COMMANDS
 
  cmd   a STRING        add a new task
  cmd   A STRING        add an annotation to the current task
@@ -52,4 +79,44 @@
  help  :h nav          view help about navigation
  help  :h rpt          view help about reports
  help  :h PATTERN      view help file lines matching PATTERN
+
+.SH FILES
+
+.TP
+~/.vitrc
+User configuration file.
+
+.SH "CREDITS & COPYRIGHTS"
+.PP
+Copyright (C) 2012 - 2013, Steve Rader
+.br
+Copyright (C) 2013 - 2014, Scott Kostyshak
+
+
+VIT is distributed under GNU General Public License version 3 or (at your
+option) any later version. See
+http://www.gnu.org/licenses/ for more information.
+
+.SH SEE ALSO
+.BR vitrc(5),
+.BR task(1)
+
+For more information regarding VIT, see the following:
+
+.TP
+The official site at
+<http://tasktools.org/projects/vit.html>
+
+.TP
+The official code repository at
+<git://tasktools.org/vit.git/>
+
+.TP
+You can contact the project by emailing
+<support@taskwarrior.org>
+
+.SH REPORTING BUGS
+.TP
+Bugs in VIT may be reported to the issue-tracker at
+<http://taskwarrior.org>
 
