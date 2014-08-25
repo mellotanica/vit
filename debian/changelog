@@ -1,3 +1,11 @@
+vit (1.2-2) unstable; urgency=medium
+
+  * d/control: 
+      - Replace task to taskwarrior in BDI and BD. (Closes: #758724).
+      - Update debhelper depends to version 9.
+
+ -- Alejandro Garrido Mota <alejandro@debian.org>  Sun, 24 Aug 2014 19:40:29 -0430
+
 vit (1.2-1) unstable; urgency=medium
 
   * New upstream release.

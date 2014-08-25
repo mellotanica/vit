@@ -2,7 +2,7 @@ Source: vit
 Section: utils
 Priority: extra
 Maintainer: Alejandro Garrido Mota <alejandro@debian.org>
-Build-Depends: debhelper (>= 8), autotools-dev, libcurses-perl, task
+Build-Depends: debhelper (>= 9), autotools-dev, libcurses-perl, taskwarrior
 Standards-Version: 3.9.5
 Homepage: http://taskwarrior.org/projects/taskwarrior/wiki/Vit
 Vcs-Git: git://github.com/mogaal/vit.git
@@ -10,7 +10,7 @@ Vcs-Browser: https://github.com/mogaal/vit
 
 Package: vit
 Architecture: all
-Depends: ${shlibs:Depends}, ${misc:Depends}, ${perl:Depends}, libcurses-perl, task
+Depends: ${shlibs:Depends}, ${misc:Depends}, ${perl:Depends}, libcurses-perl, taskwarrior
 Description: full-screen terminal interface for Taskwarrior
  A minimalistic Taskwarrior full-screen terminal interface with Vim key 
  bindings. Vit display all reports and all of the basic Taskwarrior 
